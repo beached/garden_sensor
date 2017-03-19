@@ -22,10 +22,7 @@
 
 #pragma once
 
-#include "bits.h"
-#include "communications.h"
-
-#include <stdint.h>
+#include <cstdint>
 
 namespace daw {
 	void adc_init( );

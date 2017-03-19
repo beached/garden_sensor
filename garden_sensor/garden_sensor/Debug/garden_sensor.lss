@@ -3,29 +3,29 @@ garden_sensor.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000001aa  00000000  00000000  00000054  2**1
+  0 .text         000001ac  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  000001fe  2**0
+  1 .data         00000000  00800060  00800060  00000200  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  000001fe  2**0
+  2 .comment      00000030  00000000  00000000  00000200  2**0
                   CONTENTS, READONLY
   3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000230  2**2
                   CONTENTS, READONLY
   4 .debug_aranges 000000b0  00000000  00000000  0000026c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000015c7  00000000  00000000  0000031c  2**0
+  5 .debug_info   00001e33  00000000  00000000  0000031c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 00000ba5  00000000  00000000  000018e3  2**0
+  6 .debug_abbrev 00000c99  00000000  00000000  0000214f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000771  00000000  00000000  00002488  2**0
+  7 .debug_line   000009dd  00000000  00000000  00002de8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000114  00000000  00000000  00002bfc  2**2
+  8 .debug_frame  00000114  00000000  00000000  000037c8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000007d4  00000000  00000000  00002d10  2**0
+  9 .debug_str    000008af  00000000  00000000  000038dc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000002d0  00000000  00000000  000034e4  2**0
+ 10 .debug_loc    00000221  00000000  00000000  0000418b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 000000a0  00000000  00000000  000037b4  2**0
+ 11 .debug_ranges 000000b8  00000000  00000000  000043ac  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -57,13 +57,13 @@ Disassembly of section .text:
   2a:	de bf       	out	0x3e, r29	; 62
   2c:	cd bf       	out	0x3d, r28	; 61
   2e:	13 d0       	rcall	.+38     	; 0x56 <main>
-  30:	ba c0       	rjmp	.+372    	; 0x1a6 <_exit>
+  30:	bb c0       	rjmp	.+374    	; 0x1a8 <_exit>
 
 00000032 <__bad_interrupt>:
   32:	e6 cf       	rjmp	.-52     	; 0x0 <__vectors>
 
 00000034 <_ZN3daw8read_adcEv>:
-#include <stdint.h>
+#include <cstdint>
 
 namespace daw {
 	template<typename T, typename U>
@@ -132,263 +132,244 @@ static void setup_chip( ) {
 	// Enable pins
 	daw::pin_output( ACCESSORIES_PIN );
   6a:	81 e0       	ldi	r24, 0x01	; 1
-  6c:	61 d0       	rcall	.+194    	; 0x130 <_ZN3daw10pin_outputEh>
+  6c:	64 d0       	rcall	.+200    	; 0x136 <_ZN3daw10pin_outputEh>
 	daw::pin_output( RADIO_PIN );
   6e:	82 e0       	ldi	r24, 0x02	; 2
-  70:	5f d0       	rcall	.+190    	; 0x130 <_ZN3daw10pin_outputEh>
-  72:	ce 01       	movw	r24, r28
-  74:	05 96       	adiw	r24, 0x05	; 5
-  76:	6c 01       	movw	r12, r24
+  70:	62 d0       	rcall	.+196    	; 0x136 <_ZN3daw10pin_outputEh>
 	return (((static_cast<uint16_t>(data) << 8) | hi8( crc )) ^ static_cast<uint8_t>(data >> 4) ^ (static_cast<uint16_t>(data) << 3));
 }
 
 static void radio_send_adc_value( uint8_t data_value ) {	
 	uint8_t const message_sync_bits = 0xAA;	// 1010 1010
 	uint8_t const message_preamble[4] = { 1, 2, 3, 4 };
-  78:	92 e0       	ldi	r25, 0x02	; 2
-  7a:	69 2e       	mov	r6, r25
-  7c:	23 e0       	ldi	r18, 0x03	; 3
-  7e:	72 2e       	mov	r7, r18
-  80:	34 e0       	ldi	r19, 0x04	; 4
-  82:	83 2e       	mov	r8, r19
+  72:	68 94       	set
+  74:	66 24       	eor	r6, r6
+  76:	61 f8       	bld	r6, 1
+  78:	0f 2e       	mov	r0, r31
+  7a:	f3 e0       	ldi	r31, 0x03	; 3
+  7c:	7f 2e       	mov	r7, r31
+  7e:	f0 2d       	mov	r31, r0
+  80:	68 94       	set
+  82:	88 24       	eor	r8, r8
+  84:	82 f8       	bld	r8, 2
+  86:	0f 2e       	mov	r0, r31
+  88:	f5 e0       	ldi	r31, 0x05	; 5
+  8a:	9f 2e       	mov	r9, r31
+  8c:	f0 2d       	mov	r31, r0
+  8e:	a1 2c       	mov	r10, r1
+	void radio_start_message( );
+
+	template<typename Buffer, typename T>
+	void radio_send_bytes( Buffer buffer, T const size ) {
+		auto const end = buffer + size;
+		while( buffer != end ) {
+  90:	7e 01       	movw	r14, r28
+  92:	25 e0       	ldi	r18, 0x05	; 5
+  94:	e2 0e       	add	r14, r18
+  96:	f1 1c       	adc	r15, r1
 #include <util/delay.h>
 
 static uint8_t const SERIAL_NUMBER = 0x01;
 
 static void accesories_enable( ) {
 	daw::pin_up( ACCESSORIES_PIN );
-  84:	81 e0       	ldi	r24, 0x01	; 1
-  86:	3f d0       	rcall	.+126    	; 0x106 <_ZN3daw6pin_upEh>
+  98:	81 e0       	ldi	r24, 0x01	; 1
+  9a:	36 d0       	rcall	.+108    	; 0x108 <_ZN3daw6pin_upEh>
 static void accesories_disable( ) {
 	daw::pin_down( ACCESSORIES_PIN );
 }
 
 static uint16_t read_sensor( ) {
 	return daw::read_adc( );
-  88:	d5 df       	rcall	.-86     	; 0x34 <_ZN3daw8read_adcEv>
-  8a:	98 2e       	mov	r9, r24
+  9c:	cb df       	rcall	.-106    	; 0x34 <_ZN3daw8read_adcEv>
+  9e:	b8 2e       	mov	r11, r24
 	return (((static_cast<uint16_t>(data) << 8) | hi8( crc )) ^ static_cast<uint8_t>(data >> 4) ^ (static_cast<uint16_t>(data) << 3));
 }
 
 static void radio_send_adc_value( uint8_t data_value ) {	
 	uint8_t const message_sync_bits = 0xAA;	// 1010 1010
 	uint8_t const message_preamble[4] = { 1, 2, 3, 4 };
-  8c:	81 e0       	ldi	r24, 0x01	; 1
-  8e:	89 83       	std	Y+1, r24	; 0x01
-  90:	6a 82       	std	Y+2, r6	; 0x02
-  92:	7b 82       	std	Y+3, r7	; 0x03
-  94:	8c 82       	std	Y+4, r8	; 0x04
-  96:	85 e0       	ldi	r24, 0x05	; 5
-  98:	a8 2e       	mov	r10, r24
-  9a:	b1 2c       	mov	r11, r1
+  a0:	81 e0       	ldi	r24, 0x01	; 1
+  a2:	89 83       	std	Y+1, r24	; 0x01
+  a4:	6a 82       	std	Y+2, r6	; 0x02
+  a6:	7b 82       	std	Y+3, r7	; 0x03
+  a8:	8c 82       	std	Y+4, r8	; 0x04
+  aa:	c9 2c       	mov	r12, r9
+  ac:	da 2c       	mov	r13, r10
 	auto const crc_init = crc_ccitt_update( 0x81AA, SERIAL_NUMBER );
 	auto const crc = crc_ccitt_update( crc_init, data_value );
 	
 	for( size_t n=0; n<5; ++n ) {
 		daw::radio_start_message( );
-  9c:	65 d0       	rcall	.+202    	; 0x168 <_ZN3daw19radio_start_messageEv>
-
-	template<typename Buffer, typename T>
-	void radio_send_bytes( Buffer buffer, T const size ) {
-		auto const end = buffer + size;
-		while( buffer != end ) {
+  ae:	5b d0       	rcall	.+182    	; 0x166 <_ZN3daw19radio_start_messageEv>
 			radio_send_byte( *buffer );
-  9e:	8a ea       	ldi	r24, 0xAA	; 170
-  a0:	65 d0       	rcall	.+202    	; 0x16c <_ZN3daw15radio_send_byteEh>
-  a2:	8e 01       	movw	r16, r28
-  a4:	0e 5f       	subi	r16, 0xFE	; 254
-  a6:	1f 4f       	sbci	r17, 0xFF	; 255
-  a8:	78 01       	movw	r14, r16
-  aa:	81 e0       	ldi	r24, 0x01	; 1
-  ac:	5f d0       	rcall	.+190    	; 0x16c <_ZN3daw15radio_send_byteEh>
+  b0:	8a ea       	ldi	r24, 0xAA	; 170
+  b2:	5c d0       	rcall	.+184    	; 0x16c <_ZN3daw15radio_send_byteEh>
+  b4:	8e 01       	movw	r16, r28
+  b6:	0f 5f       	subi	r16, 0xFF	; 255
+  b8:	1f 4f       	sbci	r17, 0xFF	; 255
+  ba:	f8 01       	movw	r30, r16
+  bc:	81 91       	ld	r24, Z+
+  be:	8f 01       	movw	r16, r30
+  c0:	55 d0       	rcall	.+170    	; 0x16c <_ZN3daw15radio_send_byteEh>
 	void radio_start_message( );
 
 	template<typename Buffer, typename T>
 	void radio_send_bytes( Buffer buffer, T const size ) {
 		auto const end = buffer + size;
 		while( buffer != end ) {
-  ae:	ec 14       	cp	r14, r12
-  b0:	fd 04       	cpc	r15, r13
-  b2:	39 f0       	breq	.+14     	; 0xc2 <main+0x6c>
-  b4:	f7 01       	movw	r30, r14
-  b6:	81 91       	ld	r24, Z+
-  b8:	7f 01       	movw	r14, r30
+  c2:	0e 15       	cp	r16, r14
+  c4:	1f 05       	cpc	r17, r15
+  c6:	c9 f7       	brne	.-14     	; 0xba <main+0x64>
+  c8:	8e 01       	movw	r16, r28
+  ca:	0f 5f       	subi	r16, 0xFF	; 255
+  cc:	1f 4f       	sbci	r17, 0xFF	; 255
 			radio_send_byte( *buffer );
-  ba:	58 d0       	rcall	.+176    	; 0x16c <_ZN3daw15radio_send_byteEh>
+  ce:	f8 01       	movw	r30, r16
+  d0:	81 91       	ld	r24, Z+
+  d2:	8f 01       	movw	r16, r30
+  d4:	4b d0       	rcall	.+150    	; 0x16c <_ZN3daw15radio_send_byteEh>
 	void radio_start_message( );
 
 	template<typename Buffer, typename T>
 	void radio_send_bytes( Buffer buffer, T const size ) {
 		auto const end = buffer + size;
 		while( buffer != end ) {
-  bc:	ec 14       	cp	r14, r12
-  be:	fd 04       	cpc	r15, r13
-  c0:	c9 f7       	brne	.-14     	; 0xb4 <main+0x5e>
-  c2:	81 e0       	ldi	r24, 0x01	; 1
-			radio_send_byte( *buffer );
-  c4:	53 d0       	rcall	.+166    	; 0x16c <_ZN3daw15radio_send_byteEh>
-	void radio_start_message( );
-
-	template<typename Buffer, typename T>
-	void radio_send_bytes( Buffer buffer, T const size ) {
-		auto const end = buffer + size;
-		while( buffer != end ) {
-  c6:	c0 16       	cp	r12, r16
-  c8:	d1 06       	cpc	r13, r17
-  ca:	39 f0       	breq	.+14     	; 0xda <main+0x84>
-  cc:	f8 01       	movw	r30, r16
-  ce:	81 91       	ld	r24, Z+
-  d0:	8f 01       	movw	r16, r30
-			radio_send_byte( *buffer );
-  d2:	4c d0       	rcall	.+152    	; 0x16c <_ZN3daw15radio_send_byteEh>
-	void radio_start_message( );
-
-	template<typename Buffer, typename T>
-	void radio_send_bytes( Buffer buffer, T const size ) {
-		auto const end = buffer + size;
-		while( buffer != end ) {
-  d4:	c0 16       	cp	r12, r16
-  d6:	d1 06       	cpc	r13, r17
-  d8:	c9 f7       	brne	.-14     	; 0xcc <main+0x76>
+  d6:	0e 15       	cp	r16, r14
+  d8:	1f 05       	cpc	r17, r15
+  da:	c9 f7       	brne	.-14     	; 0xce <main+0x78>
 		daw::radio_send_value( message_sync_bits );
 		daw::radio_send_bytes( message_preamble, 4 );
 		daw::radio_send_bytes( message_preamble, 4 );
 		daw::radio_send_byte( SERIAL_NUMBER );
-  da:	81 e0       	ldi	r24, 0x01	; 1
-  dc:	47 d0       	rcall	.+142    	; 0x16c <_ZN3daw15radio_send_byteEh>
+  dc:	81 e0       	ldi	r24, 0x01	; 1
+  de:	46 d0       	rcall	.+140    	; 0x16c <_ZN3daw15radio_send_byteEh>
 		daw::radio_send_byte( data_value );
-  de:	89 2d       	mov	r24, r9
-  e0:	45 d0       	rcall	.+138    	; 0x16c <_ZN3daw15radio_send_byteEh>
+  e0:	8b 2d       	mov	r24, r11
+  e2:	44 d0       	rcall	.+136    	; 0x16c <_ZN3daw15radio_send_byteEh>
 		daw::radio_send_byte( crc );
-  e2:	80 e0       	ldi	r24, 0x00	; 0
-  e4:	43 d0       	rcall	.+134    	; 0x16c <_ZN3daw15radio_send_byteEh>
-  e6:	f1 e0       	ldi	r31, 0x01	; 1
-  e8:	af 1a       	sub	r10, r31
-  ea:	b1 08       	sbc	r11, r1
+  e4:	80 e0       	ldi	r24, 0x00	; 0
+  e6:	42 d0       	rcall	.+132    	; 0x16c <_ZN3daw15radio_send_byteEh>
+  e8:	f1 e0       	ldi	r31, 0x01	; 1
+  ea:	cf 1a       	sub	r12, r31
+  ec:	d1 08       	sbc	r13, r1
 	uint8_t const message_sync_bits = 0xAA;	// 1010 1010
 	uint8_t const message_preamble[4] = { 1, 2, 3, 4 };
 	auto const crc_init = crc_ccitt_update( 0x81AA, SERIAL_NUMBER );
 	auto const crc = crc_ccitt_update( crc_init, data_value );
 	
 	for( size_t n=0; n<5; ++n ) {
-  ec:	b9 f6       	brne	.-82     	; 0x9c <main+0x46>
+  ee:	f9 f6       	brne	.-66     	; 0xae <main+0x58>
 static void accesories_enable( ) {
 	daw::pin_up( ACCESSORIES_PIN );
 }
 
 static void accesories_disable( ) {
 	daw::pin_down( ACCESSORIES_PIN );
-  ee:	81 e0       	ldi	r24, 0x01	; 1
-  f0:	14 d0       	rcall	.+40     	; 0x11a <_ZN3daw8pin_downEh>
-  f2:	2f e9       	ldi	r18, 0x9F	; 159
-  f4:	8f e0       	ldi	r24, 0x0F	; 15
-  f6:	9d e7       	ldi	r25, 0x7D	; 125
-  f8:	21 50       	subi	r18, 0x01	; 1
-  fa:	80 40       	sbci	r24, 0x00	; 0
-  fc:	90 40       	sbci	r25, 0x00	; 0
-  fe:	e1 f7       	brne	.-8      	; 0xf8 <main+0xa2>
- 100:	00 c0       	rjmp	.+0      	; 0x102 <main+0xac>
- 102:	00 00       	nop
- 104:	bf cf       	rjmp	.-130    	; 0x84 <main+0x2e>
+  f0:	81 e0       	ldi	r24, 0x01	; 1
+  f2:	15 d0       	rcall	.+42     	; 0x11e <_ZN3daw8pin_downEh>
+  f4:	2f e9       	ldi	r18, 0x9F	; 159
+  f6:	8f e0       	ldi	r24, 0x0F	; 15
+  f8:	9d e7       	ldi	r25, 0x7D	; 125
+  fa:	21 50       	subi	r18, 0x01	; 1
+  fc:	80 40       	sbci	r24, 0x00	; 0
+  fe:	90 40       	sbci	r25, 0x00	; 0
+ 100:	e1 f7       	brne	.-8      	; 0xfa <main+0xa4>
+ 102:	00 c0       	rjmp	.+0      	; 0x104 <main+0xae>
+ 104:	00 00       	nop
+ 106:	c8 cf       	rjmp	.-112    	; 0x98 <main+0x42>
 
-00000106 <_ZN3daw6pin_upEh>:
+00000108 <_ZN3daw6pin_upEh>:
 	}
 
 	template<typename T, typename U>
 	constexpr void reset_bit( T & value, U bit ) {
 		value &= ~(1u<<bit);
- 106:	9b b3       	in	r25, 0x1b	; 27
- 108:	21 e0       	ldi	r18, 0x01	; 1
- 10a:	30 e0       	ldi	r19, 0x00	; 0
- 10c:	01 c0       	rjmp	.+2      	; 0x110 <_ZN3daw6pin_upEh+0xa>
- 10e:	22 0f       	add	r18, r18
- 110:	8a 95       	dec	r24
- 112:	ea f7       	brpl	.-6      	; 0x10e <_ZN3daw6pin_upEh+0x8>
- 114:	29 2b       	or	r18, r25
- 116:	2b bb       	out	0x1b, r18	; 27
- 118:	08 95       	ret
+ 108:	9b b3       	in	r25, 0x1b	; 27
+ 10a:	21 e0       	ldi	r18, 0x01	; 1
+ 10c:	30 e0       	ldi	r19, 0x00	; 0
+ 10e:	02 c0       	rjmp	.+4      	; 0x114 <_ZN3daw6pin_upEh+0xc>
+ 110:	22 0f       	add	r18, r18
+ 112:	33 1f       	adc	r19, r19
+ 114:	8a 95       	dec	r24
+ 116:	e2 f7       	brpl	.-8      	; 0x110 <_ZN3daw6pin_upEh+0x8>
+ 118:	29 2b       	or	r18, r25
+ 11a:	2b bb       	out	0x1b, r18	; 27
+ 11c:	08 95       	ret
 
-0000011a <_ZN3daw8pin_downEh>:
- 11a:	9b b3       	in	r25, 0x1b	; 27
- 11c:	21 e0       	ldi	r18, 0x01	; 1
- 11e:	30 e0       	ldi	r19, 0x00	; 0
- 120:	01 c0       	rjmp	.+2      	; 0x124 <_ZN3daw8pin_downEh+0xa>
- 122:	22 0f       	add	r18, r18
- 124:	8a 95       	dec	r24
- 126:	ea f7       	brpl	.-6      	; 0x122 <_ZN3daw8pin_downEh+0x8>
- 128:	20 95       	com	r18
- 12a:	29 23       	and	r18, r25
- 12c:	2b bb       	out	0x1b, r18	; 27
- 12e:	08 95       	ret
+0000011e <_ZN3daw8pin_downEh>:
+ 11e:	9b b3       	in	r25, 0x1b	; 27
+ 120:	21 e0       	ldi	r18, 0x01	; 1
+ 122:	30 e0       	ldi	r19, 0x00	; 0
+ 124:	02 c0       	rjmp	.+4      	; 0x12a <_ZN3daw8pin_downEh+0xc>
+ 126:	22 0f       	add	r18, r18
+ 128:	33 1f       	adc	r19, r19
+ 12a:	8a 95       	dec	r24
+ 12c:	e2 f7       	brpl	.-8      	; 0x126 <_ZN3daw8pin_downEh+0x8>
+ 12e:	20 95       	com	r18
+ 130:	29 23       	and	r18, r25
+ 132:	2b bb       	out	0x1b, r18	; 27
+ 134:	08 95       	ret
 
-00000130 <_ZN3daw10pin_outputEh>:
-#include <stdint.h>
+00000136 <_ZN3daw10pin_outputEh>:
+#include <cstdint>
 
 namespace daw {
 	template<typename T, typename U>
 	constexpr void set_bit( T & value, U bit ) {
 		value |= (1u<<bit);
- 130:	9a b3       	in	r25, 0x1a	; 26
- 132:	21 e0       	ldi	r18, 0x01	; 1
- 134:	30 e0       	ldi	r19, 0x00	; 0
- 136:	01 c0       	rjmp	.+2      	; 0x13a <_ZN3daw10pin_outputEh+0xa>
- 138:	22 0f       	add	r18, r18
- 13a:	8a 95       	dec	r24
- 13c:	ea f7       	brpl	.-6      	; 0x138 <_ZN3daw10pin_outputEh+0x8>
- 13e:	29 2b       	or	r18, r25
- 140:	2a bb       	out	0x1a, r18	; 26
- 142:	08 95       	ret
+ 136:	9a b3       	in	r25, 0x1a	; 26
+ 138:	21 e0       	ldi	r18, 0x01	; 1
+ 13a:	30 e0       	ldi	r19, 0x00	; 0
+ 13c:	02 c0       	rjmp	.+4      	; 0x142 <_ZN3daw10pin_outputEh+0xc>
+ 13e:	22 0f       	add	r18, r18
+ 140:	33 1f       	adc	r19, r19
+ 142:	8a 95       	dec	r24
+ 144:	e2 f7       	brpl	.-8      	; 0x13e <_ZN3daw10pin_outputEh+0x8>
+ 146:	29 2b       	or	r18, r25
+ 148:	2a bb       	out	0x1a, r18	; 26
+ 14a:	08 95       	ret
 
-00000144 <_ZN3daw14radio_send_bitEb>:
-
+0000014c <_ZN3daw14radio_send_bitEb>:
+#include <cstdint>
 #include <util/delay.h>
 
 namespace daw {
 	void radio_send_bit( bool bit ) {
 		if( bit ) {
- 144:	81 11       	cpse	r24, r1
- 146:	08 c0       	rjmp	.+16     	; 0x158 <_ZN3daw14radio_send_bitEb+0x14>
+ 14c:	88 23       	and	r24, r24
+ 14e:	19 f0       	breq	.+6      	; 0x156 <_ZN3daw14radio_send_bitEb+0xa>
 			pin_up( RADIO_PIN );
+ 150:	82 e0       	ldi	r24, 0x02	; 2
+ 152:	da df       	rcall	.-76     	; 0x108 <_ZN3daw6pin_upEh>
+ 154:	02 c0       	rjmp	.+4      	; 0x15a <_ZN3daw14radio_send_bitEb+0xe>
 			} else {
 			pin_down( RADIO_PIN );
- 148:	82 e0       	ldi	r24, 0x02	; 2
- 14a:	e7 df       	rcall	.-50     	; 0x11a <_ZN3daw8pin_downEh>
+ 156:	82 e0       	ldi	r24, 0x02	; 2
+ 158:	e2 df       	rcall	.-60     	; 0x11e <_ZN3daw8pin_downEh>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 14c:	85 ed       	ldi	r24, 0xD5	; 213
- 14e:	90 e0       	ldi	r25, 0x00	; 0
- 150:	01 97       	sbiw	r24, 0x01	; 1
- 152:	f1 f7       	brne	.-4      	; 0x150 <_ZN3daw14radio_send_bitEb+0xc>
- 154:	00 00       	nop
- 156:	08 95       	ret
-#include <util/delay.h>
+ 15a:	85 ed       	ldi	r24, 0xD5	; 213
+ 15c:	90 e0       	ldi	r25, 0x00	; 0
+ 15e:	01 97       	sbiw	r24, 0x01	; 1
+ 160:	f1 f7       	brne	.-4      	; 0x15e <_ZN3daw14radio_send_bitEb+0x12>
+ 162:	00 00       	nop
+ 164:	08 95       	ret
 
-namespace daw {
-	void radio_send_bit( bool bit ) {
-		if( bit ) {
-			pin_up( RADIO_PIN );
- 158:	82 e0       	ldi	r24, 0x02	; 2
- 15a:	d5 df       	rcall	.-86     	; 0x106 <_ZN3daw6pin_upEh>
- 15c:	85 ed       	ldi	r24, 0xD5	; 213
- 15e:	90 e0       	ldi	r25, 0x00	; 0
- 160:	01 97       	sbiw	r24, 0x01	; 1
- 162:	f1 f7       	brne	.-4      	; 0x160 <_ZN3daw14radio_send_bitEb+0x1c>
- 164:	00 00       	nop
- 166:	08 95       	ret
-
-00000168 <_ZN3daw19radio_start_messageEv>:
+00000166 <_ZN3daw19radio_start_messageEv>:
 		}
 		_delay_us( baud_delay<double>( ) );
 	}
 
 	void radio_start_message( ) {
 		pin_up( RADIO_PIN );
- 168:	82 e0       	ldi	r24, 0x02	; 2
- 16a:	cd cf       	rjmp	.-102    	; 0x106 <_ZN3daw6pin_upEh>
+ 166:	82 e0       	ldi	r24, 0x02	; 2
+ 168:	cf df       	rcall	.-98     	; 0x108 <_ZN3daw6pin_upEh>
+ 16a:	08 95       	ret
 
 0000016c <_ZN3daw15radio_send_byteEh>:
 	}
@@ -401,16 +382,16 @@ namespace daw {
  174:	08 2f       	mov	r16, r24
 		radio_send_bit( false );	// start bit
  176:	80 e0       	ldi	r24, 0x00	; 0
- 178:	e5 df       	rcall	.-54     	; 0x144 <_ZN3daw14radio_send_bitEb>
- 17a:	10 e0       	ldi	r17, 0x00	; 0
- 17c:	c0 e0       	ldi	r28, 0x00	; 0
- 17e:	d0 e0       	ldi	r29, 0x00	; 0
+ 178:	e9 df       	rcall	.-46     	; 0x14c <_ZN3daw14radio_send_bitEb>
+ 17a:	c0 e0       	ldi	r28, 0x00	; 0
+ 17c:	d0 e0       	ldi	r29, 0x00	; 0
 	constexpr void reset_bit( T & value, U bit ) {
 		value &= ~(1u<<bit);
 	}
 
 	constexpr bool is_set( uint8_t value, uint8_t bit ) {
 		return value & (1u << bit);
+ 17e:	10 e0       	ldi	r17, 0x00	; 0
  180:	c8 01       	movw	r24, r16
  182:	0c 2e       	mov	r0, r28
  184:	02 c0       	rjmp	.+4      	; 0x18a <_ZN3daw15radio_send_byteEh+0x1e>
@@ -421,7 +402,7 @@ namespace daw {
 		for( uint8_t n = 0; n < 8; ++n ) {
 			radio_send_bit( is_set( value, n ) );
  18e:	81 70       	andi	r24, 0x01	; 1
- 190:	d9 df       	rcall	.-78     	; 0x144 <_ZN3daw14radio_send_bitEb>
+ 190:	dd df       	rcall	.-70     	; 0x14c <_ZN3daw14radio_send_bitEb>
  192:	21 96       	adiw	r28, 0x01	; 1
 		pin_up( RADIO_PIN );
 	}
@@ -436,21 +417,16 @@ namespace daw {
 		}
 		radio_send_bit( true );	// stop bit
  19a:	81 e0       	ldi	r24, 0x01	; 1
+ 19c:	d7 df       	rcall	.-82     	; 0x14c <_ZN3daw14radio_send_bitEb>
 	}
- 19c:	df 91       	pop	r29
- 19e:	cf 91       	pop	r28
- 1a0:	1f 91       	pop	r17
- 1a2:	0f 91       	pop	r16
-	void radio_send_byte( uint8_t value ) {
-		radio_send_bit( false );	// start bit
-		for( uint8_t n = 0; n < 8; ++n ) {
-			radio_send_bit( is_set( value, n ) );
-		}
-		radio_send_bit( true );	// stop bit
- 1a4:	cf cf       	rjmp	.-98     	; 0x144 <_ZN3daw14radio_send_bitEb>
+ 19e:	df 91       	pop	r29
+ 1a0:	cf 91       	pop	r28
+ 1a2:	1f 91       	pop	r17
+ 1a4:	0f 91       	pop	r16
+ 1a6:	08 95       	ret
 
-000001a6 <_exit>:
- 1a6:	f8 94       	cli
+000001a8 <_exit>:
+ 1a8:	f8 94       	cli
 
-000001a8 <__stop_program>:
- 1a8:	ff cf       	rjmp	.-2      	; 0x1a8 <__stop_program>
+000001aa <__stop_program>:
+ 1aa:	ff cf       	rjmp	.-2      	; 0x1aa <__stop_program>

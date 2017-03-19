@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 namespace daw {
 	template<typename T, typename U>

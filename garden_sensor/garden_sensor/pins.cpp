@@ -24,7 +24,9 @@
 #include "pins.h"
 #include "bits.h"
 
-#include <stdint.h>
+#include <avr/io.h>
+#include <cstdint>
+
 
 namespace daw {
 	void pin_up( uint8_t pin ) {

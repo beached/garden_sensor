@@ -31,8 +31,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 #include <util/delay.h>
 
 static uint8_t const SERIAL_NUMBER = 0x01;

@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include <stdint.h>
+#include <cstdint>
 
 namespace daw {
 	void pin_up( uint8_t pin );

@@ -27,6 +27,7 @@
 #include "pins.h"
 #include "radio.h"
 
+#include <cstdint>
 #include <util/delay.h>
 
 namespace daw {
