@@ -1,0 +1,247 @@
+# 1 ".././pins.cpp"
+# 1 "c:\\devel\\github\\garden_sensor\\garden_sensor\\garden_sensor\\Debug//"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 ".././pins.cpp"
+# 23 ".././pins.cpp"
+# 1 ".././defs.h" 1
+# 23 ".././defs.h"
+       
+
+
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 1 3
+# 99 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\sfr_defs.h" 1 3
+# 126 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\sfr_defs.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\inttypes.h" 1 3
+# 37 "c:\\devel\\sysgcc\\avr\\avr\\include\\inttypes.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stdint.h" 1 3 4
+# 9 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stdint.h" 3 4
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 1 3 4
+# 125 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+
+# 125 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef signed int int8_t __attribute__((__mode__(__QI__)));
+typedef unsigned int uint8_t __attribute__((__mode__(__QI__)));
+typedef signed int int16_t __attribute__ ((__mode__ (__HI__)));
+typedef unsigned int uint16_t __attribute__ ((__mode__ (__HI__)));
+typedef signed int int32_t __attribute__ ((__mode__ (__SI__)));
+typedef unsigned int uint32_t __attribute__ ((__mode__ (__SI__)));
+
+typedef signed int int64_t __attribute__((__mode__(__DI__)));
+typedef unsigned int uint64_t __attribute__((__mode__(__DI__)));
+# 146 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+# 163 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int8_t int_least8_t;
+
+
+
+
+typedef uint8_t uint_least8_t;
+
+
+
+
+typedef int16_t int_least16_t;
+
+
+
+
+typedef uint16_t uint_least16_t;
+
+
+
+
+typedef int32_t int_least32_t;
+
+
+
+
+typedef uint32_t uint_least32_t;
+
+
+
+
+
+
+
+typedef int64_t int_least64_t;
+
+
+
+
+
+
+typedef uint64_t uint_least64_t;
+# 217 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int8_t int_fast8_t;
+
+
+
+
+typedef uint8_t uint_fast8_t;
+
+
+
+
+typedef int16_t int_fast16_t;
+
+
+
+
+typedef uint16_t uint_fast16_t;
+
+
+
+
+typedef int32_t int_fast32_t;
+
+
+
+
+typedef uint32_t uint_fast32_t;
+
+
+
+
+
+
+
+typedef int64_t int_fast64_t;
+
+
+
+
+
+
+typedef uint64_t uint_fast64_t;
+# 277 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int64_t intmax_t;
+
+
+
+
+typedef uint64_t uintmax_t;
+# 10 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stdint.h" 2 3 4
+# 38 "c:\\devel\\sysgcc\\avr\\avr\\include\\inttypes.h" 2 3
+# 77 "c:\\devel\\sysgcc\\avr\\avr\\include\\inttypes.h" 3
+typedef int32_t int_farptr_t;
+
+
+
+typedef uint32_t uint_farptr_t;
+# 127 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\sfr_defs.h" 2 3
+# 100 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+# 408 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 3
+# 1 "C:\\Program Files (x86)\\Atmel\\Studio\\7.0\\Packs\\Atmel\\ATtiny_DFP\\1.2.118\\include/avr/iotn84a.h" 1 3
+# 409 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+# 585 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\portpins.h" 1 3
+# 586 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\common.h" 1 3
+# 588 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\version.h" 1 3
+# 590 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+
+
+
+
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\fuse.h" 1 3
+# 239 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\fuse.h" 3
+typedef struct
+{
+    unsigned char low;
+    unsigned char high;
+    unsigned char extended;
+} __fuse_t;
+# 597 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\lock.h" 1 3
+# 600 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+# 28 ".././defs.h" 2
+# 24 ".././pins.cpp" 2
+# 1 ".././pins.h" 1
+# 23 ".././pins.h"
+       
+
+
+
+
+# 27 ".././pins.h"
+namespace daw {
+ void pin_up( uint8_t pin );
+ void pin_down( uint8_t pin );
+ void pin_input( uint8_t pin );
+ void pin_output( uint8_t pin );
+}
+# 25 ".././pins.cpp" 2
+# 1 ".././bits.h" 1
+# 23 ".././bits.h"
+       
+
+
+
+namespace daw {
+ template<typename T, typename U>
+ constexpr void set_bit( T & value, U bit ) {
+  value |= (1u<<bit);
+ }
+
+ template<typename T, typename U>
+ constexpr void reset_bit( T & value, U bit ) {
+  value &= ~(1u<<bit);
+ }
+
+ constexpr bool is_set( uint8_t value, uint8_t bit ) {
+  return value & (1u << bit);
+ }
+}
+# 26 ".././pins.cpp" 2
+
+
+
+namespace daw {
+ void pin_up( uint8_t pin ) {
+  set_bit( 
+# 31 ".././pins.cpp" 3
+          (*(volatile uint8_t *)((0x1B) + 0x20))
+# 31 ".././pins.cpp"
+               , pin );
+ }
+
+ void pin_down( uint8_t pin ) {
+  reset_bit( 
+# 35 ".././pins.cpp" 3
+            (*(volatile uint8_t *)((0x1B) + 0x20))
+# 35 ".././pins.cpp"
+                 , pin );
+ }
+
+ void pin_input( uint8_t pin ) {
+  reset_bit( 
+# 39 ".././pins.cpp" 3
+            (*(volatile uint8_t *)((0x1A) + 0x20))
+# 39 ".././pins.cpp"
+                , pin );
+ }
+
+ void pin_output( uint8_t pin ) {
+  set_bit( 
+# 43 ".././pins.cpp" 3
+          (*(volatile uint8_t *)((0x1A) + 0x20))
+# 43 ".././pins.cpp"
+              , pin );
+ }
+}

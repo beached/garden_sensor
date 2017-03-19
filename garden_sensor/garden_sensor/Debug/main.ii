@@ -1,0 +1,860 @@
+# 1 ".././main.cpp"
+# 1 "c:\\devel\\github\\garden_sensor\\garden_sensor\\garden_sensor\\Debug//"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 ".././main.cpp"
+# 23 ".././main.cpp"
+# 1 ".././adc.h" 1
+# 23 ".././adc.h"
+       
+
+# 1 ".././bits.h" 1
+# 23 ".././bits.h"
+       
+
+# 1 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stdint.h" 1 3 4
+# 9 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stdint.h" 3 4
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 1 3 4
+# 125 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+
+# 125 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef signed int int8_t __attribute__((__mode__(__QI__)));
+typedef unsigned int uint8_t __attribute__((__mode__(__QI__)));
+typedef signed int int16_t __attribute__ ((__mode__ (__HI__)));
+typedef unsigned int uint16_t __attribute__ ((__mode__ (__HI__)));
+typedef signed int int32_t __attribute__ ((__mode__ (__SI__)));
+typedef unsigned int uint32_t __attribute__ ((__mode__ (__SI__)));
+
+typedef signed int int64_t __attribute__((__mode__(__DI__)));
+typedef unsigned int uint64_t __attribute__((__mode__(__DI__)));
+# 146 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+# 163 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int8_t int_least8_t;
+
+
+
+
+typedef uint8_t uint_least8_t;
+
+
+
+
+typedef int16_t int_least16_t;
+
+
+
+
+typedef uint16_t uint_least16_t;
+
+
+
+
+typedef int32_t int_least32_t;
+
+
+
+
+typedef uint32_t uint_least32_t;
+
+
+
+
+
+
+
+typedef int64_t int_least64_t;
+
+
+
+
+
+
+typedef uint64_t uint_least64_t;
+# 217 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int8_t int_fast8_t;
+
+
+
+
+typedef uint8_t uint_fast8_t;
+
+
+
+
+typedef int16_t int_fast16_t;
+
+
+
+
+typedef uint16_t uint_fast16_t;
+
+
+
+
+typedef int32_t int_fast32_t;
+
+
+
+
+typedef uint32_t uint_fast32_t;
+
+
+
+
+
+
+
+typedef int64_t int_fast64_t;
+
+
+
+
+
+
+typedef uint64_t uint_fast64_t;
+# 277 "c:\\devel\\sysgcc\\avr\\avr\\include\\stdint.h" 3 4
+typedef int64_t intmax_t;
+
+
+
+
+typedef uint64_t uintmax_t;
+# 10 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stdint.h" 2 3 4
+# 26 ".././bits.h" 2
+
+
+# 27 ".././bits.h"
+namespace daw {
+ template<typename T, typename U>
+ constexpr void set_bit( T & value, U bit ) {
+  value |= (1u<<bit);
+ }
+
+ template<typename T, typename U>
+ constexpr void reset_bit( T & value, U bit ) {
+  value &= ~(1u<<bit);
+ }
+
+ constexpr bool is_set( uint8_t value, uint8_t bit ) {
+  return value & (1u << bit);
+ }
+}
+# 26 ".././adc.h" 2
+# 1 ".././communications.h" 1
+# 23 ".././communications.h"
+       
+
+
+
+namespace daw {
+ template<typename T>
+ constexpr T baud_delay( ) {
+  return static_cast<T>(1000000)/static_cast<T>(9600);
+ }
+
+ template<uint8_t divider>
+ constexpr uint8_t get_adc_div_factor( ) {
+  static_assert( divider == 2 || divider == 4 || divider == 8 || divider == 16 || divider == 32 || divider == 64 || divider == 128, "Invalid Divider" );
+  return
+    divider == 2 ? 0b00000001 :
+    divider == 4 ? 0b00000010 :
+    divider == 8 ? 0b00000011 :
+    divider == 16 ? 0b00000100 :
+    divider == 32 ? 0b00000101 :
+    divider == 64 ? 0b00000110 :
+    divider == 128 ? 0b00000111 : 0;
+ }
+}
+# 27 ".././adc.h" 2
+
+
+
+namespace daw {
+ void adc_init( );
+ uint16_t read_adc( );
+}
+# 24 ".././main.cpp" 2
+
+
+# 1 ".././defs.h" 1
+# 23 ".././defs.h"
+       
+
+
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 1 3
+# 99 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\sfr_defs.h" 1 3
+# 126 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\sfr_defs.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\inttypes.h" 1 3
+# 77 "c:\\devel\\sysgcc\\avr\\avr\\include\\inttypes.h" 3
+
+# 77 "c:\\devel\\sysgcc\\avr\\avr\\include\\inttypes.h" 3
+typedef int32_t int_farptr_t;
+
+
+
+typedef uint32_t uint_farptr_t;
+# 127 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\sfr_defs.h" 2 3
+# 100 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+# 408 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 3
+# 1 "C:\\Program Files (x86)\\Atmel\\Studio\\7.0\\Packs\\Atmel\\ATtiny_DFP\\1.2.118\\include/avr/iotn84a.h" 1 3
+# 409 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+# 585 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\portpins.h" 1 3
+# 586 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\common.h" 1 3
+# 588 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\version.h" 1 3
+# 590 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+
+
+
+
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\fuse.h" 1 3
+# 239 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\fuse.h" 3
+typedef struct
+{
+    unsigned char low;
+    unsigned char high;
+    unsigned char extended;
+} __fuse_t;
+# 597 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\lock.h" 1 3
+# 600 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\io.h" 2 3
+# 28 ".././defs.h" 2
+# 27 ".././main.cpp" 2
+# 1 ".././on_exit.h" 1
+# 23 ".././on_exit.h"
+       
+
+# 1 ".././stdcpp.h" 1
+# 23 ".././stdcpp.h"
+       
+
+
+
+
+# 27 ".././stdcpp.h"
+namespace std {
+ template<typename T>
+ struct remove_reference {
+  using type = T;
+ };
+
+ template<typename T>
+ struct remove_reference<T&> {
+  using type = T;
+ };
+
+ template<typename T>
+ struct remove_reference<T&&> {
+  using type = T;
+ };
+
+ template<typename T, T v>
+ struct integral_constant {
+  static constexpr T value = v;
+  using value_type = T;
+  using type = integral_constant;
+
+  constexpr operator value_type( ) const noexcept {
+   return value;
+  }
+
+  constexpr value_type operator( )( ) const noexcept {
+   return value;
+  }
+ };
+
+ using true_type = std::integral_constant<bool, true>;
+ using false_type = std::integral_constant<bool, false>;
+
+ template<typename T>
+ struct is_lvalue_reference: std::false_type { };
+
+ template<typename T>
+ struct is_lvalue_reference<T&>: std::true_type { };
+
+
+ template<typename T>
+ inline T&& forward( typename std::remove_reference<T>::type & t ) noexcept {
+  return static_cast<T&&>(t);
+ }
+
+ template<typename T>
+ inline T&& forward( typename std::remove_reference<T>::type && t) noexcept {
+  static_assert( !std::is_lvalue_reference<T>::value, "Cannot forward an rvalue as an lvalue." );
+  return static_cast<T&&>(t);
+ }
+}
+# 26 ".././on_exit.h" 2
+
+namespace daw {
+ namespace impl {
+  template<typename Function>
+  class on_exit final {
+   Function m_run_on_exit;
+  public:
+   on_exit( ) = delete;
+   on_exit( on_exit const & ) = default;
+   on_exit( on_exit && ) = default;
+   on_exit & operator=( on_exit const & ) = default;
+   on_exit & operator=( on_exit && ) = default;
+
+   on_exit( Function && run_on_exit ):
+     m_run_on_exit{ std::forward<Function>( run_on_exit ) } { }
+
+   ~on_exit( ) {
+    m_run_on_exit( );
+   }
+  };
+ }
+
+ template<typename Function>
+ auto on_exit( Function && run_on_exit ) {
+  return impl::on_exit<Function>{ std::forward<Function>( run_on_exit ) };
+ }
+}
+# 28 ".././main.cpp" 2
+# 1 ".././pins.h" 1
+# 23 ".././pins.h"
+       
+
+
+
+namespace daw {
+ void pin_up( uint8_t pin );
+ void pin_down( uint8_t pin );
+ void pin_input( uint8_t pin );
+ void pin_output( uint8_t pin );
+}
+# 29 ".././main.cpp" 2
+# 1 ".././radio.h" 1
+# 23 ".././radio.h"
+       
+
+
+
+
+namespace daw {
+ void radio_send_bit( bool bit );
+ void radio_send_byte( uint8_t value );
+ void radio_start_message( );
+
+ template<typename Buffer, typename T>
+ void radio_send_bytes( Buffer buffer, T const size ) {
+  auto const end = buffer + size;
+  while( buffer != end ) {
+   radio_send_byte( *buffer );
+   ++buffer;
+  }
+ }
+
+ template<typename T>
+ void radio_send_value( T const & value ) {
+  auto ptr = reinterpret_cast<uint8_t const *>(&value);
+  radio_send_bytes( ptr, sizeof( T ) );
+ }
+
+ template<typename T>
+ void radio_start_message( uint8_t const * buffer, T const size ) {
+  radio_start_message( );
+  radio_send_bytes( buffer, size );
+ }
+}
+# 30 ".././main.cpp" 2
+
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\interrupt.h" 1 3
+# 33 ".././main.cpp" 2
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\avr\\sleep.h" 1 3
+# 34 ".././main.cpp" 2
+# 1 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stddef.h" 1 3 4
+# 149 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stddef.h" 3 4
+
+# 149 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stddef.h" 3 4
+typedef int ptrdiff_t;
+# 216 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stddef.h" 3 4
+typedef unsigned int size_t;
+# 426 "c:\\devel\\sysgcc\\avr\\lib\\gcc\\avr\\5.3.0\\include\\stddef.h" 3 4
+typedef struct {
+  long long __max_align_ll __attribute__((__aligned__(__alignof__(long long))));
+  long double __max_align_ld __attribute__((__aligned__(__alignof__(long double))));
+} max_align_t;
+
+
+
+
+
+
+  typedef decltype(nullptr) nullptr_t;
+# 35 ".././main.cpp" 2
+
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 1 3
+# 45 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay_basic.h" 1 3
+# 40 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay_basic.h" 3
+static __inline__ void _delay_loop_1(uint8_t __count) __attribute__((__always_inline__));
+static __inline__ void _delay_loop_2(uint16_t __count) __attribute__((__always_inline__));
+# 80 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay_basic.h" 3
+void
+_delay_loop_1(uint8_t __count)
+{
+ __asm__ volatile (
+  "1: dec %0" "\n\t"
+  "brne 1b"
+  : "=r" (__count)
+  : "0" (__count)
+ );
+}
+# 102 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay_basic.h" 3
+void
+_delay_loop_2(uint16_t __count)
+{
+ __asm__ volatile (
+  "1: sbiw %0,1" "\n\t"
+  "brne 1b"
+  : "=w" (__count)
+  : "0" (__count)
+ );
+}
+# 46 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 2 3
+# 1 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 1 3
+# 121 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern "C" {
+
+
+
+
+
+extern double cos(double __x) __attribute__((__const__));
+
+
+
+
+
+extern double sin(double __x) __attribute__((__const__));
+
+
+
+
+
+extern double tan(double __x) __attribute__((__const__));
+
+
+
+
+
+
+extern double fabs(double __x) __attribute__((__const__));
+
+
+
+
+
+
+extern double fmod(double __x, double __y) __attribute__((__const__));
+# 168 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern double modf(double __x, double *__iptr);
+
+
+extern float modff (float __x, float *__iptr);
+
+
+
+
+extern double sqrt(double __x) __attribute__((__const__));
+
+
+extern float sqrtf (float) __attribute__((__const__));
+
+
+
+
+extern double cbrt(double __x) __attribute__((__const__));
+# 195 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern double hypot (double __x, double __y) __attribute__((__const__));
+
+
+
+
+
+
+
+extern double square(double __x) __attribute__((__const__));
+
+
+
+
+
+
+extern double floor(double __x) __attribute__((__const__));
+
+
+
+
+
+
+extern double ceil(double __x) __attribute__((__const__));
+# 235 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern double frexp(double __x, int *__pexp);
+
+
+
+
+
+
+
+extern double ldexp(double __x, int __exp) __attribute__((__const__));
+
+
+
+
+
+extern double exp(double __x) __attribute__((__const__));
+
+
+
+
+
+extern double cosh(double __x) __attribute__((__const__));
+
+
+
+
+
+extern double sinh(double __x) __attribute__((__const__));
+
+
+
+
+
+extern double tanh(double __x) __attribute__((__const__));
+
+
+
+
+
+
+
+extern double acos(double __x) __attribute__((__const__));
+
+
+
+
+
+
+
+extern double asin(double __x) __attribute__((__const__));
+
+
+
+
+
+
+extern double atan(double __x) __attribute__((__const__));
+# 299 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern double atan2(double __y, double __x) __attribute__((__const__));
+
+
+
+
+
+extern double log(double __x) __attribute__((__const__));
+
+
+
+
+
+extern double log10(double __x) __attribute__((__const__));
+
+
+
+
+
+extern double pow(double __x, double __y) __attribute__((__const__));
+
+
+
+
+
+
+extern int isnan(double __x) __attribute__((__const__));
+# 334 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern int isinf(double __x) __attribute__((__const__));
+
+
+
+
+
+
+__attribute__((__const__)) static inline int isfinite (double __x)
+{
+    unsigned char __exp;
+    __asm__ (
+ "mov	%0, %C1		\n\t"
+ "lsl	%0		\n\t"
+ "mov	%0, %D1		\n\t"
+ "rol	%0		"
+ : "=r" (__exp)
+ : "r" (__x) );
+    return __exp != 0xff;
+}
+
+
+
+
+
+
+__attribute__((__const__)) static inline double copysign (double __x, double __y)
+{
+    __asm__ (
+ "bst	%D2, 7	\n\t"
+ "bld	%D0, 7	"
+ : "=r" (__x)
+ : "0" (__x), "r" (__y) );
+    return __x;
+}
+# 377 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern int signbit (double __x) __attribute__((__const__));
+
+
+
+
+
+
+extern double fdim (double __x, double __y) __attribute__((__const__));
+# 393 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern double fma (double __x, double __y, double __z) __attribute__((__const__));
+
+
+
+
+
+
+
+extern double fmax (double __x, double __y) __attribute__((__const__));
+
+
+
+
+
+
+
+extern double fmin (double __x, double __y) __attribute__((__const__));
+
+
+
+
+
+
+extern double trunc (double __x) __attribute__((__const__));
+# 427 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern double round (double __x) __attribute__((__const__));
+# 440 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern long lround (double __x) __attribute__((__const__));
+# 454 "c:\\devel\\sysgcc\\avr\\avr\\include\\math.h" 3
+extern long lrint (double __x) __attribute__((__const__));
+
+
+
+}
+# 47 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 2 3
+# 86 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+static __inline__ void _delay_us(double __us) __attribute__((__always_inline__));
+static __inline__ void _delay_ms(double __ms) __attribute__((__always_inline__));
+# 165 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+void
+_delay_ms(double __ms)
+{
+ double __tmp ;
+# 190 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+ uint16_t __ticks;
+ __tmp = ((
+# 191 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h"
+          8196000UL
+# 191 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+               ) / 4e3) * __ms;
+ if (__tmp < 1.0)
+  __ticks = 1;
+ else if (__tmp > 65535)
+ {
+
+  __ticks = (uint16_t) (__ms * 10.0);
+  while(__ticks)
+  {
+
+   _delay_loop_2(((
+# 201 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h"
+                  8196000UL
+# 201 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+                       ) / 4e3) / 10);
+   __ticks --;
+  }
+  return;
+ }
+ else
+  __ticks = (uint16_t)__tmp;
+ _delay_loop_2(__ticks);
+
+}
+# 254 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+void
+_delay_us(double __us)
+{
+ double __tmp ;
+# 279 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+ uint8_t __ticks;
+ double __tmp2 ;
+ __tmp = ((
+# 281 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h"
+          8196000UL
+# 281 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+               ) / 3e6) * __us;
+ __tmp2 = ((
+# 282 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h"
+           8196000UL
+# 282 "c:\\devel\\sysgcc\\avr\\avr\\include\\util\\delay.h" 3
+                ) / 4e6) * __us;
+ if (__tmp < 1.0)
+  __ticks = 1;
+ else if (__tmp2 > 65535)
+ {
+  _delay_ms(__us / 1000.0);
+ }
+ else if (__tmp > 255)
+ {
+  uint16_t __ticks=(uint16_t)__tmp2;
+  _delay_loop_2(__ticks);
+  return;
+ }
+ else
+  __ticks = (uint8_t)__tmp;
+ _delay_loop_1(__ticks);
+
+}
+# 37 ".././main.cpp" 2
+
+
+# 38 ".././main.cpp"
+static uint8_t const SERIAL_NUMBER = 0x01;
+
+static void accesories_enable( ) {
+ daw::pin_up( 
+# 41 ".././main.cpp" 3
+             1 
+# 41 ".././main.cpp"
+                             );
+}
+
+static void accesories_disable( ) {
+ daw::pin_down( 
+# 45 ".././main.cpp" 3
+               1 
+# 45 ".././main.cpp"
+                               );
+}
+
+static uint16_t read_sensor( ) {
+ return daw::read_adc( );
+}
+
+static constexpr uint8_t lo8( uint16_t value ) {
+ return static_cast<uint8_t>(value & 0x00FF);
+}
+
+static constexpr uint8_t hi8( uint16_t value ) {
+ return static_cast<uint8_t>((value & 0xFF00)>>8);
+}
+
+static constexpr uint16_t crc_ccitt_update( uint16_t crc, uint8_t data ) {
+ data ^= lo8( data );
+ data ^= data << 4;
+ return (((static_cast<uint16_t>(data) << 8) | hi8( crc )) ^ static_cast<uint8_t>(data >> 4) ^ (static_cast<uint16_t>(data) << 3));
+}
+
+static void radio_send_adc_value( uint8_t data_value ) {
+ static uint8_t const message_sync_bits = 0xAA;
+ static uint8_t const message_preamble[4] = { 1, 2, 3, 4 };
+ static auto const crc_init = crc_ccitt_update( 0x81AA, SERIAL_NUMBER );
+ auto const crc = crc_ccitt_update( crc_init, data_value );
+
+ for( size_t n=0; n<5; ++n ) {
+  daw::radio_start_message( );
+  daw::radio_send_value( message_sync_bits );
+  daw::radio_send_bytes( message_preamble, 4 );
+  daw::radio_send_bytes( message_preamble, 4 );
+  daw::radio_send_value( SERIAL_NUMBER );
+  daw::radio_send_value( data_value );
+  daw::radio_send_value( crc );
+ }
+}
+
+static void power_down( ) {
+ _delay_ms(5000);
+}
+
+static bool should_wake( ) {
+
+ return true;
+}
+
+static void setup_chip( ) {
+
+ 
+# 94 ".././main.cpp" 3
+(*(volatile uint8_t *)((0x1A) + 0x20)) 
+# 94 ".././main.cpp"
+     = 0b001111111;
+ 
+# 95 ".././main.cpp" 3
+(*(volatile uint8_t *)((0x1B) + 0x20)) 
+# 95 ".././main.cpp"
+      = 0;
+ 
+# 96 ".././main.cpp" 3
+(*(volatile uint8_t *)((0x1A) + 0x20)) 
+# 96 ".././main.cpp"
+     = 0;
+
+ daw::pin_output( 
+# 98 ".././main.cpp" 3
+                 1 
+# 98 ".././main.cpp"
+                                 );
+ daw::pin_output( 
+# 99 ".././main.cpp" 3
+                 2 
+# 99 ".././main.cpp"
+                           );
+}
+
+static void run_accessories( ) {
+ accesories_enable( );
+ auto const do_accessories_disable = daw::on_exit( []( ) { accesories_disable( ); } );
+ auto const tst = read_sensor( );
+ radio_send_adc_value( tst );
+}
+
+int main( ) {
+ setup_chip( );
+ while( true ) {
+  if( should_wake( ) ) {
+   run_accessories( );
+  }
+  power_down( );
+ }
+}
