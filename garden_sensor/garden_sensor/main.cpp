@@ -1,16 +1,16 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017 Darrell Wright
+// Copyright (c) Darrell Wright
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files( the "Software" ), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
-// copies of the Software, and to permit persons to whom the Software is
+// of this software and associated documentation files( the "Software" ), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and / or
+// sell copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -28,8 +28,8 @@
 #include "pins.h"
 #include "radio.h"
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/io.h>
 #include <avr/sleep.h>
 #include <cstddef>
 #include <cstdint>
@@ -50,26 +50,28 @@ static uint16_t read_sensor( ) {
 }
 
 static constexpr uint8_t lo8( uint16_t value ) {
-	return static_cast<uint8_t>(value & 0x00FF);
+	return static_cast<uint8_t>( value & 0x00FF );
 }
 
 static constexpr uint8_t hi8( uint16_t value ) {
-	return static_cast<uint8_t>((value & 0xFF00)>>8);
+	return static_cast<uint8_t>( ( value & 0xFF00 ) >> 8 );
 }
 
 static uint16_t crc_ccitt_update( uint16_t crc, uint8_t data ) {
 	data ^= lo8( data );
 	data ^= data << 4;
-	return (((static_cast<uint16_t>(data) << 8) | hi8( crc )) ^ static_cast<uint8_t>(data >> 4) ^ (static_cast<uint16_t>(data) << 3));
+	return ( ( ( static_cast<uint16_t>( data ) << 8 ) | hi8( crc ) ) ^
+	         static_cast<uint8_t>( data >> 4 ) ^
+	         ( static_cast<uint16_t>( data ) << 3 ) );
 }
 
-static void radio_send_adc_value( uint8_t data_value ) {	
-	uint8_t const message_sync_bits = 0xAA;	// 1010 1010
-	uint8_t const message_preamble[4] = { 1, 2, 3, 4 };
+static void radio_send_adc_value( uint8_t data_value ) {
+	uint8_t const message_sync_bits = 0xAA; // 1010 1010
+	uint8_t const message_preamble[4] = {1, 2, 3, 4};
 	auto const crc_init = crc_ccitt_update( 0x81AA, SERIAL_NUMBER );
 	auto const crc = crc_ccitt_update( crc_init, data_value );
-	
-	for( size_t n=0; n<5; ++n ) {
+
+	for( size_t n = 0; n < 5; ++n ) {
 		daw::radio_start_message( );
 		daw::radio_send_value( message_sync_bits );
 		daw::radio_send_bytes( message_preamble, 4 );
@@ -81,7 +83,7 @@ static void radio_send_adc_value( uint8_t data_value ) {
 }
 
 static void power_down( ) {
-	_delay_ms(5000);		// TODO: go into sleep mode
+	_delay_ms( 5000 ); // TODO: go into sleep mode
 }
 
 static bool should_wake( ) {
@@ -101,14 +103,15 @@ static void setup_chip( ) {
 
 static void run_accessories( ) {
 	accesories_enable( );
-	auto const do_accessories_disable = daw::on_exit( []( ) { accesories_disable( ); } );	// Ensure they are powered off
+	auto const do_accessories_disable = daw::on_exit(
+	  []( ) { accesories_disable( ); } ); // Ensure they are powered off
 	auto const tst = read_sensor( );
 	radio_send_adc_value( tst );
 }
 
 int main( ) {
 	setup_chip( );
-	while( true ) {	
+	while( true ) {
 		if( should_wake( ) ) {
 			run_accessories( );
 		}
